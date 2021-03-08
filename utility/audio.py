@@ -13,6 +13,7 @@
 ###############
 # IMPORTATION #
 ###############
+import os
 import librosa
 import numpy as np
 import matplotlib
@@ -204,6 +205,7 @@ def extract_feature(input_file, feature='fbank', cmvn=True, save_feature=None):
         feat = (feat - feat.mean(axis=1)[:,np.newaxis]) / (feat.std(axis=1)+1e-16)[:,np.newaxis]
     if save_feature is not None:
         tmp = np.swapaxes(feat, 0, 1).astype('float32')
+        os.makedirs(os.path.split(save_feature)[0], exist_ok=True)
         np.save(save_feature,tmp)
         return len(tmp)
     else:
